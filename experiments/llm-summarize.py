@@ -10,7 +10,7 @@ import sys
 from functools import partial
 
 if __name__ == "__main__":
-    sys.path[0] = "/home/lhz/PLResearch/coq-agent-branch-dev"
+    sys.path[0] = "/home/user/PLResearch/coq-agent-branch-dev"
 
 import json
 import argparse

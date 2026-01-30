@@ -31,9 +31,9 @@ parser.add_argument("--cobblestone-bench", action="store_true",
 
 args = parser.parse_args()
 if args.gpt4_log:
-    logs = '/data2/lhz/experimental-results-gpt4-1106-add-rag/gpt4-1106/'
+    logs = '/data2/user/experimental-results-gpt4-1106-add-rag/gpt4-1106/'
 else:
-    logs = f'/data2/lhz/experimental-results'
+    logs = f'/data2/user/experimental-results'
     if args.suffix:
         logs += f'-{args.suffix}'
     logs += f'/{args.method}'

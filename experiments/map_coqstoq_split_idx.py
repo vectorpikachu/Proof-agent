@@ -60,17 +60,17 @@ def main():
     parser = argparse.ArgumentParser(description="Map cobblestone-coqstoq matched entries to (split, idx)")
     parser.add_argument(
         "--matched",
-        default="/home/lhz/PLResearch/coq-agent-branch-dense/experiments/cobblestone-inter-coqstoq-matched.json",
+        default="/home/user/PLResearch/coq-agent-branch-dense/experiments/cobblestone-inter-coqstoq-matched.json",
         help="Path to matched json",
     )
     parser.add_argument(
         "--meta-glob",
-        default="/home/lhz/PLResearch/CoqStoq/datasets/dataset_*/metadata.jsonl",
+        default="/home/user/PLResearch/CoqStoq/datasets/dataset_*/metadata.jsonl",
         help="Glob for CoqStoq metadata jsonl files",
     )
     parser.add_argument(
         "--out",
-        default="/home/lhz/PLResearch/coq-agent-branch-dense/experiments/cobb_coqstoq_to_split_idx.json",
+        default="/home/user/PLResearch/coq-agent-branch-dense/experiments/cobb_coqstoq_to_split_idx.json",
         help="Output json path",
     )
     args = parser.parse_args()

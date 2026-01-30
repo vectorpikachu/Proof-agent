@@ -21,32 +21,32 @@ logger = logging.getLogger('GenPromptInternal')
 
 def convert_proof_state(proof_state):
     """
-    将Coq的proof state转换为命题形式
+    Convert Coq proof state to proposition form
     """
     if not proof_state or proof_state.strip() == "No current goal":
         return "No current goal"
     
-    # 分割proof state为上下文和目标部分
+    # Split proof state into context and goal parts
     lines = proof_state.strip().split('\n')
     context_lines = []
     goal_lines = []
     separator_found = False
     
     for line in lines:
-        if line.strip().startswith('=') and '=' in line:  # 检测分隔线
+        if line.strip().startswith('=') and '=' in line:  # Detect separator line
             separator_found = True
             continue
         if not separator_found:
             context_lines.append(line.strip())
         else:
-            if line.strip():  # 忽略空行
+            if line.strip():  # Ignore empty lines
                 goal_lines.append(line.strip())
     
-    goal_str = ' '.join(goal_lines)  # 合并目标行
+    goal_str = ' '.join(goal_lines)  # Merge goal lines
     
-    # 解析上下文
-    variables = []  # 存储变量和类型
-    hypotheses = []  # 存储假设表达式
+    # Parse context
+    variables = []  # Store variables and types
+    hypotheses = []  # Store hypothesis expressions
     
     for line in context_lines:
         if ':' not in line:
@@ -55,18 +55,18 @@ def convert_proof_state(proof_state):
         left = parts[0].strip()
         right = parts[1].strip()
         
-        # 判断是否是变量声明（类型是简单标识符）
+        # Check if it's a variable declaration (type is simple identifier)
         if re.match(r'^\w+$', right) or right in ['Z', 'int', 'nat', 'bool']:
             variables.append((left, right))
         else:
-            hypotheses.append(right)  # 添加假设表达式
+            hypotheses.append(right)  # Add hypothesis expression
     
-    # 解析目标中的全称量词和蕴含
-    goal_vars = []  # 目标中引入的变量
-    goal_hyps = []  # 目标中的前提条件
-    conclusion = goal_str  # 默认结论是整个目标
+    # Parse universal quantifiers and implications in goal
+    goal_vars = []  # Variables introduced in goal
+    goal_hyps = []  # Preconditions in goal
+    conclusion = goal_str  # Default conclusion is entire goal
     
-    # 匹配全称量词: forall var : type, ...
+    # Match universal quantifier: forall var : type, ...
     forall_match = re.match(r'^\s*forall\s+(\w+)\s*:\s*(\w+)\s*,\s*(.*)$', goal_str)
     if forall_match:
         var_name = forall_match.group(1)
@@ -74,18 +74,18 @@ def convert_proof_state(proof_state):
         goal_vars.append((var_name, var_type))
         remaining = forall_match.group(3)
         
-        # 解析蕴含式: A -> B -> ... -> conclusion
+        # Parse implications: A -> B -> ... -> conclusion
         parts = [p.strip() for p in remaining.split('->')]
         if len(parts) > 1:
-            goal_hyps = parts[:-1]  # 所有前提条件
-            conclusion = parts[-1]   # 最终结论
+            goal_hyps = parts[:-1]  # All preconditions
+            conclusion = parts[-1]   # Final conclusion
     
-    # 合并所有变量和假设
+    # Merge all variables and hypotheses
     all_vars = variables + goal_vars
     all_hyps = hypotheses + goal_hyps
     
-    # 构建命题字符串
-    # 全称量化部分
+    # Build proposition string
+    # Universal quantification part
     proposition = "forall "
     proposition += " ".join([f"({var} : {typ})" for var, typ in all_vars])
     proposition += ",\n"
@@ -268,7 +268,7 @@ class PromptInfo:
         template: Template = task_prover,
         **extra_args
     ):
-        # 准备基本的prompt数据
+        # Prepare basic prompt data
         prompt_data = {
             'proof_status': self.goal_init, #self.goal_init,
             'definitions': self.definitions,
@@ -279,7 +279,7 @@ class PromptInfo:
             'verified_text': extra_args.get('verified_text', ''),
         }
         
-        # 如果启用命题形式，添加转换后的命题
+        # If proposition form is enabled, add converted proposition
         if self.use_proposition_form:
             try:
                 proposition_form = convert_proof_state(self.goal_init)

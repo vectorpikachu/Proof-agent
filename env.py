@@ -2,25 +2,25 @@ import os, logging, resource, shutil, sys
 from icecream import ic
 
 "CTX Name Config"
-ctx_id = 3 # 0: local, 1: server, 2: chuyue server, 3: Hangzhou server
+ctx_id = 3 # 0: local, 1: server, 2: server2, 3: server3
 
 "Prover Info"
 verbose = True
-cache_root = ['/Volumes/Data/CoqProjectPKU/data2/syc/proof_cache/',
-              '/data2/syc/proof_cache/',
-              '/home/chuyue/coq/.cache/',
-              '/data2/lhz/proof_cache'][ctx_id]
+cache_root = ['/Volumes/Data/CoqProject/data2/user/proof_cache/',
+              '/data2/user/proof_cache/',
+              '/home/user2/coq/.cache/',
+              '/data2/user/proof_cache'][ctx_id]
 
 output_dir = ['a', 'b', 'c',
-    '/data2/lhz/output'][ctx_id]
+    '/data2/user/output'][ctx_id]
 
 # TODO: it is not used currently
-new_db_root = '/home/chuyue/coq/database_rebuild'
+new_db_root = '/home/user2/coq/database_rebuild'
 
-prover_root = ['/Users/syc/Desktop/coq-agent', 
-               '/home/syc/coq-agent',
-               '/home/chuyue/coq/coq-agent',
-               '/home/lhz/PLResearch/coq-agent'][ctx_id]
+prover_root = ['/Users/user/Desktop/coq-agent', 
+               '/home/user/coq-agent',
+               '/home/user2/coq/coq-agent',
+               '/home/user/PLResearch/coq-agent'][ctx_id]
 
 prompt_files_loc = f'{prover_root}/prompt/'
 
@@ -28,20 +28,20 @@ prompt_files_loc = f'{prover_root}/prompt/'
 num_procs = [4, 64, 20, 64][ctx_id]
 
 "Benchmark Info"
-coqstoq_root = ['/Volumes/Data/CoqProjectPKU/CoqStoq/', 
-                '/home/syc/CoqStoq/',
-                '/home/chuyue/coq/CoqStoq',
-                '/home/lhz/PLResearch/CoqStoq'][ctx_id]
+coqstoq_root = ['/Volumes/Data/CoqProject/CoqStoq/', 
+                '/home/user/CoqStoq/',
+                '/home/user2/coq/CoqStoq',
+                '/home/user/PLResearch/CoqStoq'][ctx_id]
 
-_coqstoq_root = ['/Volumes/Data/CoqProjectPKU/_CoqStoq/', 
-                 '/data2/syc/CoqStoq/',
-                 '/home/chuyue/coq/CoqStoq',
-                 '/data2/lhz/CoqStoq'][ctx_id]
+_coqstoq_root = ['/Volumes/Data/CoqProject/_CoqStoq/', 
+                 '/data2/user/CoqStoq/',
+                 '/home/user2/coq/CoqStoq',
+                 '/data2/user/CoqStoq'][ctx_id]
 bak_coqstoq_root = [
-    '/Volumes/Data/CoqProjectPKU/bak_CoqStoq/',
-    '/data2/syc/proof_cache/backup/CoqStoq/',
-    '/home/chuyue/coq/CoqStoq',
-    '/data2/lhz/proof_cache/backup/CoqStoq'
+    '/Volumes/Data/CoqProject/bak_CoqStoq/',
+    '/data2/user/proof_cache/backup/CoqStoq/',
+    '/home/user2/coq/CoqStoq',
+    '/data2/user/proof_cache/backup/CoqStoq'
 ][ctx_id]
 
 "Toy Example Case Info"
@@ -56,27 +56,20 @@ _2gb = 2 * 1024 * 1024
 _30m = 1800
 
 "LLM Configs"
-base_url = 'https://llm.xmcp.ltd/'
-# base_url='https://api.openai-proxy.org'
+# Configure these via environment variables or update with your own values
+base_url = os.environ.get('LLM_BASE_URL', 'https://api.openai.com/v1')
+api_key = os.environ.get('LLM_API_KEY', 'your-api-key-here')
 
-# LHZ's API Key
-# api_key = 'sk-Rm0q8_1zgRsDpPVnF80wPQ'
-# Yican API Key
-# api_key = 'sk-Y8NLVx8Zzty-jacFEhQTXw'
-# SCW's API Key
-api_key = 'sk-Y8NLVx8Zzty-jacFEhQTXw'
-# close API Key
-# api_key = 'sk-xku0VV3ytXZ1r6pO1KhdUf5cetr00MNVnYunpKn9OohMkud3'
-# API KEY without rate limit
-# api_key = 'sk-1tEGM4sXRxbLwcrsQ0JPUQ'
-aoai_api_key=""
-aoai_base_url=""
+# Azure OpenAI configurations (optional)
+aoai_api_key = os.environ.get('AOAI_API_KEY', '')
+aoai_base_url = os.environ.get('AOAI_BASE_URL', '')
 
-yunwu_base_url='https://yunwu.ai/v1'
-yunwu_api_key= 'sk-LYcuP9BNMcabq42HEWP5JVagLf0OIzbtuYTuGBdwo2z9rsCZ'
+# Alternative provider configurations (optional)
+yunwu_base_url = os.environ.get('YUNWU_BASE_URL', '')
+yunwu_api_key = os.environ.get('YUNWU_API_KEY', '')
 
-qingyun_base_url='https://qyapi.yzqyzl.cn/v1'
-qingyun_api_key='sk-slyljJLqH90ggPyKV6fhfQCgjmFXtAnW2bcEBLUif7LiMiGC'
+qingyun_base_url = os.environ.get('QINGYUN_BASE_URL', '')
+qingyun_api_key = os.environ.get('QINGYUN_API_KEY', '')
 ## CLUSTER
 
 def get_output_dir():

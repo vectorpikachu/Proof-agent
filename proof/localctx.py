@@ -158,7 +158,7 @@ class LocalContext:
         self.legacy_text += legacy_text
         self.legacy_len = len(self.legacy_text)
         
-        # 我们需要保留剩下的 proved text.
+        # We need to preserve the remaining proved text
         self.legacy_text_cont = legacy_text_cont
 
         self.extra_bad_keywords = []
@@ -308,7 +308,7 @@ class LocalContext:
         self.__update_pfsteps(steps[self.legacy_steps:])
 
     def init_pfenv(self):
-        # 运行到 thm 的位置
+        # Run to the theorem position
         steps = self.update_dup()
         lsteps = len(steps) - 1
         self.legacy_text = ''.join([

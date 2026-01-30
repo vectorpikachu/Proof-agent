@@ -1,6 +1,6 @@
 import sys
 if __name__ == '__main__':
-    sys.path[0] = '/home/lhz/PLResearch/coq-agent'
+    sys.path[0] = '/home/user/PLResearch/coq-agent'
 
 import os, hashlib, pickle, traceback
 from pymilvus import MilvusClient
@@ -32,14 +32,14 @@ def __register(mode='dense'):
     elif mode == 'dense-1024':
         logger.info('Registering Dense-1024 client')
         client = MilvusClient(
-            uri='https://in03-9910f8af57cf275.serverless.gcp-us-west1.cloud.zilliz.com',
-            token='049e3ee484b1d7664c5253ef7ebd50cfa3c01526846552a47097d81771c3e272bcb5dcc2fcf0588810ace2cd3d68cbec72fe3d4d',
+            uri=os.environ.get('MILVUS_URI_1024', 'your-milvus-uri-here'),
+            token=os.environ.get('MILVUS_TOKEN_1024', 'your-milvus-token-here'),
         )
     elif mode == 'dense' or mode== 'bm25':
         logger.info('Registering Dense-3072 Client')
         client = MilvusClient(
-            uri='https://in05-a412221ce3e7b0e.serverless.gcp-us-west1.cloud.zilliz.com',
-            token='049e3ee484b1d7664c5253ef7ebd50cfa3c01526846552a47097d81771c3e272bcb5dcc2fcf0588810ace2cd3d68cbec72fe3d4d',
+            uri=os.environ.get('MILVUS_URI_3072', 'your-milvus-uri-here'),
+            token=os.environ.get('MILVUS_TOKEN_3072', 'your-milvus-token-here'),
         )
 
 @dataclass
@@ -255,7 +255,7 @@ if __name__ == '__main__':
         QueryItem(
             col='col_proof',
             data=[[0.01 for _ in range(3072)]],
-            filter="path=='/home/syc/CoqStoq_backup/test-repos/compcert/backend/Deadcodeproof.v' && index < 150",
+            filter="path=='/home/user/CoqStoq_backup/test-repos/compcert/backend/Deadcodeproof.v' && index < 150",
             category=1,
             limit=3,
             anns_field = 'vec_proof_idea_only'
@@ -263,7 +263,7 @@ if __name__ == '__main__':
         QueryItem(
             col='col_lemma',
             data=[[0.01 for _ in range(3072)]],
-            filter="path=='/home/syc/CoqStoq_backup/test-repos/compcert/backend/Deadcodeproof.v' && index < 120",
+            filter="path=='/home/user/CoqStoq_backup/test-repos/compcert/backend/Deadcodeproof.v' && index < 120",
             category=1,
             limit=3,
             anns_field='vec_lemma_text'

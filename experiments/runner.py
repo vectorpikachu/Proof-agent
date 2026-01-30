@@ -22,9 +22,9 @@ config_paths = {
 }
 
 hammer_cache_path = {
-    "branch-check-bm25": "/data2/lhz/proof_cache/hammer_cache_p4",
-    "branch-check-dense": "/data2/lhz/proof_cache/hammer_cache_p4",
-    "branch-check-bm25-nodoc": "/data2/lhz/proof_cache/hammer_cache_p4",
+    "branch-check-bm25": "/data2/user/proof_cache/hammer_cache_p4",
+    "branch-check-dense": "/data2/user/proof_cache/hammer_cache_p4",
+    "branch-check-bm25-nodoc": "/data2/user/proof_cache/hammer_cache_p4",
 }
 
 new_benchmarks = [
@@ -57,7 +57,7 @@ timeout 300m python3 main.py -s {s} -i {i} -o {log_dir} -c {cfg_path}
 def get_exp_root_dir():
     return os.environ.get(
         "EXP_ROOT_DIR", 
-        '/data2/lhz/experimental-results-no-suggestion/'
+        '/data2/user/experimental-results-no-suggestion/'
     )
 
 def execute_with_config(arg, config_name):
@@ -75,7 +75,7 @@ def execute_with_config(arg, config_name):
         subprocess.run(
             ['python3', 'dataset_build.py', 
             "-s", str(s), "-i", str(i)],
-            cwd='/home/lhz/PLResearch/CoqStoq',
+            cwd='/home/user/PLResearch/CoqStoq',
             capture_output=True,
             check=True,
         )
@@ -84,7 +84,7 @@ def execute_with_config(arg, config_name):
     env = os.environ.copy()
     env["HAMMER_CACHE_DIR"] = hammer_cache_path.get(
         config_name,
-        "/data2/lhz/proof_cache/hammer_cache"
+        "/data2/user/proof_cache/hammer_cache"
     )
     subprocess.run(cmd, shell=True, env=env)
     print(f'[End] config={config_name}, s={s}, i={i}', flush=True)
@@ -185,5 +185,5 @@ if __name__ == "__main__":
         p.map(run, all_tasks)
 
     os.system(
-        f'find /home/lhz/PLResearch/ -name "coqpyt_aux_*" -type f -delete'
+        f'find /home/user/PLResearch/ -name "coqpyt_aux_*" -type f -delete'
     )

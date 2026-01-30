@@ -15,7 +15,7 @@ parser.add_argument('-m', '--method', type=str, default='bm25',
                     help='Method name (e.g., bm25, full, no-rag)')
 args = parser.parse_args()
 
-logs = f'/data2/lhz/experimental-results'
+logs = f'/data2/user/experimental-results'
 if not args.suggestion:
     logs += '-no-suggestion'
 logs += f'/{args.method}'

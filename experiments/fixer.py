@@ -2,8 +2,8 @@ import subprocess, os, traceback
 
 #results-ckpt-2025-04-30_no_history_dependent_rag
 #results-2025-05-04-no-cold-start-history-all
-logs = '/home/lhz/PLResearch/.cache/logs'
-# logs = '/Volumes/Data/CoqProjectPKU/data2/syc/proof_cache/logs/'
+logs = '/home/user/PLResearch/.cache/logs'
+# logs = '/Volumes/Data/CoqProject/data2/user/proof_cache/logs/'
 
 ans = 0
 cnt = 0
@@ -27,5 +27,5 @@ for folder in os.listdir(logs):
             print(f'Fixing {num}', flush=True)
             subprocess.run(
                 ['python3', 'dataset_build.py', str(num)],
-                cwd='/home/lhz/PLResearch/CoqStoq',
+                cwd='/home/user/PLResearch/CoqStoq',
             )

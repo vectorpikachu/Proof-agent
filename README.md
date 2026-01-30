@@ -80,6 +80,35 @@ The project uses environment-specific configurations in `env.py` for different d
 - CoqStoq dataset paths
 - Resource limits (time, memory)
 
+#### API Configuration
+
+Configure LLM API access via environment variables:
+
+```bash
+export LLM_BASE_URL="https://api.openai.com/v1"  # or your preferred endpoint
+export LLM_API_KEY="your-api-key-here"
+```
+
+Optional alternative provider configurations:
+```bash
+export AOAI_API_KEY="your-azure-openai-key"
+export AOAI_BASE_URL="your-azure-endpoint"
+export YUNWU_API_KEY="your-yunwu-key"
+export YUNWU_BASE_URL="your-yunwu-endpoint"
+export QINGYUN_API_KEY="your-qingyun-key"
+export QINGYUN_BASE_URL="your-qingyun-endpoint"
+```
+
+#### Vector Database Configuration (for RAG)
+
+Configure Milvus/Zilliz vector database access:
+```bash
+export MILVUS_URI_1024="your-milvus-uri-for-1024-dim"
+export MILVUS_TOKEN_1024="your-milvus-token"
+export MILVUS_URI_3072="your-milvus-uri-for-3072-dim"
+export MILVUS_TOKEN_3072="your-milvus-token"
+```
+
 ## Workflow
 
 1. **Context Loading**: Load target theorem and preceding proof context

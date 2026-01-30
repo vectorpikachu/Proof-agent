@@ -1,7 +1,7 @@
 from util import cobblestone_bench, random_cobblestone_bench
 import os
 
-logs = f'/data2/lhz/experimental-results-gpt4-1106-add-rag/gpt4-1106'
+logs = f'/data2/user/experimental-results-gpt4-1106-add-rag/gpt4-1106'
 
 def check_solved(result_path: str) -> bool:
     if os.path.exists(result_path):

@@ -25,7 +25,7 @@ def get_repo(name: Optional[str]):
 
 def transfer_file(file: str, short_space: Optional[str]) -> str:
     if file.find('.opam') != -1:
-        return '/home/syc/' + file[file.find('.opam'):]
+        return '/home/user/' + file[file.find('.opam'):]
     if short_space is None:
         return file
     if file.find(short_space) != -1:
@@ -33,7 +33,7 @@ def transfer_file(file: str, short_space: Optional[str]) -> str:
     else:
         short_file = file
     return os.path.join(
-        '/home/syc/CoqStoq_backup',
+        '/home/user/CoqStoq_backup',
         get_repo(short_space), short_file
     )
 
@@ -72,7 +72,7 @@ def run(lctx: LocalContext) -> str | None:
                         logger.error(f'Diag: {diag.message}')
                         assert False, 'Pfile is invalid'
         
-        # 把需要证明的命题之前的 legacy text 加载
+        # Load legacy text before the theorem to be proven
         pfile.exec(lctx.legacy_steps)
         logger.info('Legacy Loaded')
         ctx_terms = pfile.context.terms

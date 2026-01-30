@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Script to copy files starting with 'pfstate_emb' or 'lemma_emb' 
-from /data2/lhz/experimental-results/ to emb_prompts_only/,
+from /data2/user/experimental-results/ to emb_prompts_only/,
 preserving the directory structure.
 """
 
@@ -10,7 +10,7 @@ import shutil
 from pathlib import Path
 
 def copy_emb_files():
-    source_dir = Path("/data2/lhz/experimental-results")
+    source_dir = Path("/data2/user/experimental-results")
     target_dir = source_dir / "emb_prompts_only"
     
     # Create target directory if it doesn't exist

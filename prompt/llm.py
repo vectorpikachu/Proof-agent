@@ -197,7 +197,7 @@ def truncate_messages(msgs: List[Dict], max_prompt_tokens: int | None, model_nam
         return preserved
 
     kept = []
-    for m in rest:  # keep from head to tail until预算耗尽
+    for m in rest:  # keep from head to tail until budget exhausted
         tks = msg_tokens(m)
         if tks <= budget:
             kept.append(m)
