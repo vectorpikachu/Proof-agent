@@ -1,5 +1,4 @@
 import os, logging, resource, shutil, sys
-from icecream import ic
 
 "CTX Name Config"
 ctx_id = 3 # 0: local, 1: server, 2: server2, 3: server3
@@ -9,10 +8,10 @@ verbose = True
 cache_root = ['/Volumes/Data/CoqProject/data2/user/proof_cache/',
               '/data2/user/proof_cache/',
               '/home/user2/coq/.cache/',
-              '/data2/user/proof_cache'][ctx_id]
+              '/data2/lhz/proof_cache'][ctx_id]
 
 output_dir = ['a', 'b', 'c',
-    '/data2/user/output'][ctx_id]
+    '/data2/lhz/output'][ctx_id]
 
 # TODO: it is not used currently
 new_db_root = '/home/user2/coq/database_rebuild'
@@ -20,7 +19,7 @@ new_db_root = '/home/user2/coq/database_rebuild'
 prover_root = ['/Users/user/Desktop/coq-agent', 
                '/home/user/coq-agent',
                '/home/user2/coq/coq-agent',
-               '/home/user/PLResearch/coq-agent'][ctx_id]
+               '/home/lhz/test-claude/Proof-agent'][ctx_id]
 
 prompt_files_loc = f'{prover_root}/prompt/'
 
@@ -31,17 +30,17 @@ num_procs = [4, 64, 20, 64][ctx_id]
 coqstoq_root = ['/Volumes/Data/CoqProject/CoqStoq/', 
                 '/home/user/CoqStoq/',
                 '/home/user2/coq/CoqStoq',
-                '/home/user/PLResearch/CoqStoq'][ctx_id]
+                '/home/lhz/PLResearch/CoqStoq'][ctx_id]
 
 _coqstoq_root = ['/Volumes/Data/CoqProject/_CoqStoq/', 
                  '/data2/user/CoqStoq/',
                  '/home/user2/coq/CoqStoq',
-                 '/data2/user/CoqStoq'][ctx_id]
+                 '/data2/lhz/CoqStoq'][ctx_id]
 bak_coqstoq_root = [
     '/Volumes/Data/CoqProject/bak_CoqStoq/',
     '/data2/user/proof_cache/backup/CoqStoq/',
     '/home/user2/coq/CoqStoq',
-    '/data2/user/proof_cache/backup/CoqStoq'
+    '/data2/lhz/proof_cache/backup/CoqStoq'
 ][ctx_id]
 
 "Toy Example Case Info"
@@ -108,8 +107,6 @@ def set_env(tlimit: int, mlimit: int, loglevel = 15, pass_no = ''):
         level=loglevel,
         format='%(asctime)s::%(levelname)s::%(name)s\n%(filename)s::%(funcName)s.%(lineno)d:\n%(message)s\n\n'
     )
-
-    ic(output_dir)
 
     # Ensure coq-lsp is on PATH (virtualenv activation may have hidden opam bin)
     def _ensure_coqlsp():

@@ -28,3 +28,4 @@ experiments/*.lock
 .cursorrules
 .cursorignore
 nohup.out
+set-env.sh

@@ -122,6 +122,12 @@ class ModelHub(Enum):
         if not self.has_effort():
             assert False, f'Model {self.name()} does not have reasoning effort'
         return self.value['reasoning_effort']
+    
+    def get_raw_name(self):
+        if hasattr(self, '_raw_name'):
+            return self._raw_name
+        else:
+            return self.name()
 
     def get_platform(self):
         if self.is_azure():
@@ -137,33 +143,35 @@ class ModelHub(Enum):
 def str_to_model(name: str):
     match name:
         case 'yunwu-gpt4':
-            return ModelHub.YunwuGPT4
+            model = ModelHub.YunwuGPT4
         case 'yunwu-gpt4-1106':
-            return ModelHub.YunwuGPT4_1106
+            model = ModelHub.YunwuGPT4_1106
         case 'qingyun-gpt4':
-            return ModelHub.QingyunGPT4
+            model = ModelHub.QingyunGPT4
         case 'GPT4o':
-            return ModelHub.GPT4o
+            model = ModelHub.GPT4o
         case 'Claude37':
-            return ModelHub.Claude37
+            model = ModelHub.Claude37
         case 'o3' | 'GPTO3':
-            return ModelHub.GPTO3
+            model = ModelHub.GPTO3
         case 'o3mini' | 'GPTO3Mini':
-            return ModelHub.GPTO3Mini
+            model = ModelHub.GPTO3Mini
         case 'o4mini' | 'AzureO4Mini':
-            return ModelHub.AzureO4Mini
+            model = ModelHub.AzureO4Mini
         case 'GPTO4Mini':
-            return ModelHub.GPTO4Mini
+            model = ModelHub.GPTO4Mini
         case 'GPT5':
-            return ModelHub.GPT5
+            model = ModelHub.GPT5
         case 'YunwuGPTO4Mini':
-            return ModelHub.YunwuGPTO4Mini
+            model = ModelHub.YunwuGPTO4Mini
         case 'QwenMax':
-            return ModelHub.QwenMax
+            model = ModelHub.QwenMax
         case 'Qwen3Plus':
-            return ModelHub.Qwen3Plus
+            model = ModelHub.Qwen3Plus
         case _:
-            assert False
+            assert False, f'Model {name} not recognized'
+    model._raw_name = name
+    return model
 
 def to_model(val: str):
     if val.find('o3') != -1:
