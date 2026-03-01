@@ -253,13 +253,13 @@ def _streaming_call_raw(chat, model: str):
 
 from prompt.util import str_to_model
 streaming_cache_root = os.path.join(get_prompt_cache_root(), 'streaming')
-def streaming_call(chat: ChatHistory, model: str):
-    md5 = chat.md5(str_to_model(model))
+def streaming_call(chat: ChatHistory, model: ModelHub):
+    md5 = chat.md5(model)
     if os.path.exists(os.path.join(streaming_cache_root, md5)):
         with open(os.path.join(streaming_cache_root, md5), 'rb') as f:
             return pickle.load(f)
     else:
-        result = _streaming_call_raw(chat, model)
+        result = _streaming_call_raw(chat, model.name())
         with open(os.path.join(streaming_cache_root, md5), 'wb') as f:
             pickle.dump(result, f)
         return result

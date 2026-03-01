@@ -389,7 +389,7 @@ def query_llm_for_next_tactic(
     # Initialize defs with goal_state.defs for accumulation in tool calls
     defs = list(goal_state.defs)
     
-    pinfo = PromptInfo({
+    pinfo = PromptInfo(lctx.model, {
         'definitions': defs,
         'verified_steps': '',
         'failing_trials': tmp_trials,

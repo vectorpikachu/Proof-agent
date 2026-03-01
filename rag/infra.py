@@ -55,7 +55,7 @@ class QueryParam:
     use_doc: bool
     use_history: bool
     round_no: int
-    model: str
+    model: ModelHub
     retrieval_method: str = 'dense'
 
     def gen_vec(self, category):

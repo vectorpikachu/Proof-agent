@@ -6,6 +6,7 @@ import sys, os, logging, re
 
 from rag.query import QueryParam, get_examples, get_lemmas
 from rag.infra import execute
+from prompt.util import ModelHub
 
 from prompt.templates import (
     system_prover,
@@ -98,7 +99,7 @@ def convert_proof_state(proof_state):
 
 
 class PromptInfo:
-    def __init__(self, cfg: Dict = {}):
+    def __init__(self, model: ModelHub, cfg: Dict = {}):
         self.help_info = cfg['help_info']
         self.__init_defs(cfg.get('definitions', []))
         self.failing_trials = cfg['failing_trials']
@@ -131,7 +132,8 @@ class PromptInfo:
         self.max_fetch = cfg.get('max_fetch', 8)
         self.use_print_tool = cfg.get('use_def_tool', False)
         self.use_proposition_form = cfg.get('use_proposition_form', False)
-        self.model = cfg.get('model', '')
+        #self.model = cfg.get('model', '')
+        self.model = model
 
         self.help_info['retrieval_method'] = cfg.get(
             'retrieval_method', 'dense'

@@ -27,7 +27,7 @@ def lemma_emb(
     defs: str,
     trials: str,
     round_no: int,
-    model: str
+    model: ModelHub
 ):
     if use_doc:
         system = systems_lemma_emb[with_history]
@@ -84,7 +84,7 @@ def pfstat_emb(
     defs: str,
     trials: str,
     round_no: int,
-    model: str
+    model: ModelHub
 ):
 
     if use_doc:
